@@ -27,22 +27,26 @@ public class Main {
                     String milkType = scanner.nextLine();
                     coffee = new ExtraDecorator(coffee, "Milk (" + milkType + ")", 0.5);
 
-                    System.out.print("Add syrups (Vanilla, Caramel): ");
-                    String syrupInput = scanner.nextLine();
-                    String[] syrups = syrupInput.split(",");
-                    for (String syrup : syrups) {
-                        coffee = new ExtraDecorator(coffee, "Syrup (" + syrup.trim() + ")", 0.3);
-                    }
+                    System.out.print("Enter sugar type (White, Brown, Splenda): ");
+                    String sugarType = scanner.nextLine();
+                    coffee = new ExtraDecorator(coffee, "Sugar (" + sugarType + ")", 0.1);
 
+                    System.out.print("Add syrup? (yes or no): ");
+                    String addSyrup = scanner.nextLine();
+                    if (addSyrup.equalsIgnoreCase("yes")) {
+                        System.out.print("Add syrups (Vanilla, Caramel): ");
+                        String syrupInput = scanner.nextLine();
+                        String[] syrups = syrupInput.split(",");
+                        for (String syrup : syrups) {
+                            coffee = new ExtraDecorator(coffee, "Syrup (" + syrup.trim() + ")", 0.3);
+                        }
+                    }
+                    
                     System.out.print("Add cinnamon? (yes or no): ");
                     String addCinnamon = scanner.nextLine();
                     if (addCinnamon.equalsIgnoreCase("yes")) {
                         coffee = new ExtraDecorator(coffee, "Cinnamon", 0.2);
                     }
-
-                    System.out.print("Enter sugar type (White, Brown, Splenda): ");
-                    String sugarType = scanner.nextLine();
-                    coffee = new ExtraDecorator(coffee, "Sugar (" + sugarType + ")", 0.1);
 
                     CoffeeOrder order = new CoffeeOrder(coffeeType, coffee);
 
