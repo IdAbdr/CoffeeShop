@@ -4,6 +4,7 @@ class CoffeeOrder extends Observable{
     private String coffeeType;
     private CoffeeDecorator coffee;
     private OrderState currentState;
+    private long creationTime;
 
     public CoffeeOrder(String coffeeType, CoffeeDecorator coffee){
         this.coffeeType=coffeeType;
@@ -34,5 +35,28 @@ class CoffeeOrder extends Observable{
 
     public void setCoffeeType(String coffeeType) {
         this.coffeeType = coffeeType;
+    }
+
+    public String getCurrentState() {
+        return currentState.getClass().getSimpleName();
+    }
+
+    public void checkAndTransitionState(){
+        long currentTime = System.currentTimeMillis();
+        long elapsedTime = currentTime - creationTime;
+
+        if (currentState instanceof WaitingState && elapsedTime >=60000){
+            transitionToReadyState();
+        } else if ( currentState instanceof ReadyState && elapsedTime >=120000) {
+            transitionToDeliveredState();
+        }
+    }
+
+    public void transitionToReadyState(){
+        currentState = new ReadyState();
+    }
+
+    public void transitionToDeliveredState(){
+        currentState = new DeliveredState();
     }
 }
