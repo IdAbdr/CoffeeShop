@@ -3,11 +3,11 @@ import java.util.List;
 public class CoffeeShopFacade {
     private CoffeeShop coffeeShop;
 
-    public CoffeeShopFacade(){
+    public CoffeeShopFacade() {
         this.coffeeShop = CoffeeShop.getInstance();
     }
 
-    public void createOrder(String customerName, String coffeeType, String milkType, String sugarType, boolean addSyrup, boolean addCinnamon){
+    public void createOrderWithSyrup(String customerName, String coffeeType, String milkType, String sugarType, boolean addSyrup, boolean addCinnamon, String syrupType) {
         CustomerOrderObserver customerObserver = new CustomerOrderObserver(customerName);
 
         CoffeeDecorator coffee = new BasicCoffee();
@@ -15,7 +15,7 @@ public class CoffeeShopFacade {
         coffee = new ExtraDecorator(coffee, "Sugar (" + sugarType + ")", 0.1);
 
         if (addSyrup) {
-            coffee = new ExtraDecorator(coffee, "Syrup (Vanilla)", 0.3);
+            coffee = new ExtraDecorator(coffee, "Syrup (" + syrupType + ")", 0.3);
         }
 
         if (addCinnamon) {
@@ -28,7 +28,7 @@ public class CoffeeShopFacade {
         order.addObserver(customerObserver);
     }
 
-    public List<CoffeeOrder> getOrders(){
+    public List<CoffeeOrder> getOrders() {
         return coffeeShop.getOrders();
     }
 }

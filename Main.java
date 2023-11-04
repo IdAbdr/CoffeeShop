@@ -1,13 +1,12 @@
 import java.util.List;
-import java.util.Observer;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner scanner=new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
         CoffeeShopFacade coffeeShopFacade = new CoffeeShopFacade();
 
-        while (true){
+        while (true) {
             System.out.println("CoffeeShop Console App");
             System.out.println("1. Create Order");
             System.out.println("2. View Orders");
@@ -18,7 +17,7 @@ public class Main {
             int choice = scanner.nextInt();
             scanner.nextLine();
 
-            switch (choice){
+            switch (choice) {
                 case 1:
                     System.out.println("Enter your name: ");
                     String customerName = scanner.nextLine();
@@ -35,12 +34,18 @@ public class Main {
                     System.out.print("Add syrup? (yes or no): ");
                     String addSyrupInput = scanner.nextLine();
                     boolean addSyrup = addSyrupInput.equalsIgnoreCase("yes");
+                    String syrupType = null;
+
+                    if (addSyrup) {
+                        System.out.print("Enter syrup type (Vanilla, Caramel): ");
+                        syrupType = scanner.nextLine();
+                    }
 
                     System.out.print("Add cinnamon? (yes or no): ");
                     String addCinnamonInput = scanner.nextLine();
                     boolean addCinnamon = addCinnamonInput.equalsIgnoreCase("yes");
 
-                    coffeeShopFacade.createOrder(customerName, coffeeType, milkType, sugarType, addSyrup, addCinnamon);
+                    coffeeShopFacade.createOrderWithSyrup(customerName, coffeeType, milkType, sugarType, addSyrup, addCinnamon, syrupType);
 
                     System.out.println("Order created");
                     break;
@@ -48,8 +53,8 @@ public class Main {
                 case 2:
                     System.out.println("Orders:");
                     List<CoffeeOrder> ordersList = coffeeShopFacade.getOrders();
-                    for (int i=0; i<ordersList.size();i++){
-                        System.out.println("Order" + (i+1) + ":");
+                    for (int i = 0; i < ordersList.size(); i++) {
+                        System.out.println("Order" + (i + 1) + ":");
                         ordersList.get(i).printOrder();
                         System.out.println("------------");
                     }
@@ -61,10 +66,10 @@ public class Main {
                     scanner.nextLine();
                     List<CoffeeOrder> orders = coffeeShopFacade.getOrders();
 
-                    if (orderNumber >= 1 && orderNumber <= orders.size()){
+                    if (orderNumber >= 1 && orderNumber <= orders.size()) {
                         CoffeeOrder order = orders.get(orderNumber - 1);
                         order.processOrder();
-                    }else {
+                    } else {
                         System.out.println("Invalid order number");
                     }
                     break;
